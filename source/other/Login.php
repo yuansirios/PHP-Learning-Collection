@@ -6,8 +6,8 @@
 
     $method = $_SERVER['REQUEST_METHOD'];
 
-    $userName = $_REQUEST['userName'];
-    $passWord = $_REQUEST['passWord'];
+    $userName = $_REQUEST['username'];
+    $passWord = $_REQUEST['password'];
 
     $headArr = apache_request_headers();
     if (array_key_exists('token',$headArr)){
@@ -17,8 +17,8 @@
     if ($method === 'POST'){
         $argStr = file_get_contents("php://input");
         $argArr = json_decode($argStr);
-        $userName = $argArr->{'userName'};
-        $passWord = $argArr->{'passWord'};
+        $userName = $argArr->{'username'};
+        $passWord = $argArr->{'password'};
     }
 
     $errMsg = '当前请求 >>>'.$method.' '.'userName >>>'.$userName.' '.'passWord >>>'.$passWord;
@@ -27,7 +27,7 @@
     $errCode = 200;
     $body = array('token'=>$tokenArg);
 
-    // Response::show($success,$errCode,$errMsg,$body,'json');
+    Response::show($success,$errCode,$errMsg,$body,'json');
 
     /* 配置连接参数 */
     $config = array(
