@@ -18,7 +18,6 @@ sudo apachectl start    //开启服务
 sudo apachectl restart	//重启Apache服务  
 sudo apachectl stop     //停止Apache服务  
 sudo apachectl -v       //查看服务版本  
-
 ```
 
 * 查看服务是否开启
