@@ -1,5 +1,7 @@
 <?php
+    //指定返回json数据，默认html
     header("Content-Type:application/json; charset=utf-8");
+    //导入工具类
     require_once('../tool/Response.php');
 
     //请求类型
