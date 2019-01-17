@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (empty($_POST["name"]))
     {
-        $nameErr = "名字是必需的";
+        $nameErr = "请输入姓名";
     }
     else
     {
@@ -94,39 +94,35 @@ function test_input($data)
         名字: <input type="text" name="name" value="<?php echo $name;?>">
         <span class="error">*
             <?php echo $nameErr;?></span>
-        <br><br>
-        E-mail: <input type="text" name="email" value="<?php echo $email;?>">
+        <br>
+        邮箱: <input type="text" name="email" value="<?php echo $email;?>">
         <span class="error">*
             <?php echo $emailErr;?></span>
-        <br><br>
+        <br>
         网址: <input type="text" name="website" value="<?php echo $website;?>">
         <span class="error">
             <?php echo $websiteErr;?></span>
-        <br><br>
+        <br>
         备注: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
-        <br><br>
+        <br>
         性别:
-        <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female" ) echo "checked" ;?>
-        value="female">女
-        <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male" ) echo "checked" ;?>
-        value="male">男
+        <input type="radio" name="gender" <?php if (isset($gender) && $gender=="女" ) echo "已选择" ;?>
+        value="女">女
+        <input type="radio" name="gender" <?php if (isset($gender) && $gender=="男" ) echo "已选择" ;?>
+        value="男">男
         <span class="error">*
             <?php echo $genderErr;?></span>
-        <br><br>
-        <input type="submit" name="submit" value="Submit">
+        <br>
+        <input type="submit" name="submit" value="提交">
     </form>
 
     <?php
 echo "<h2>您输入的内容是:</h2>";
-echo $name;
-echo "<br>";
-echo $email;
-echo "<br>";
-echo $website;
-echo "<br>";
-echo $comment;
-echo "<br>";
-echo $gender;
+echo '姓名：'.$name.'<br>';
+echo '邮箱：'.$email.'<br>';
+echo '网址：'.$website.'<br>';
+echo '备注：'.$comment.'<br>';
+echo '性别：'.$gender.'<br>';
 ?>
 
 </body>
