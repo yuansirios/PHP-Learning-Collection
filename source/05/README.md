@@ -39,8 +39,8 @@ sudo /usr/local/mysql/support-files/mysql.server stop
 
 用Navicat新建连接报错，检查过服务是正常开启，查询了很多解决方案，尝试很多遍，通过**修改配置文件**，得以成功解决。
 
-注意区分Mac版MySQL与Windows版的MySQL配置文件扩展名不同: 
-Mac下: my.cnf
+注意区分Mac版MySQL与Windows版的MySQL配置文件扩展名不同: <br>
+Mac下: my.cnf <br>
 Windows下: my.ini
 
 这里介绍MAC下安装Mysql找不到my.cnf配置文件的问题,并自己创建my.cnf文件
