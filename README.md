@@ -10,6 +10,7 @@ PHP自学资料整理，希望能给正在学习的你提供点帮助，原创�
 | 03  | VSCode + xdebug调试 |  |
 | 04  | 常用表单操作 | 基础操作 |
 | 05  | 上手MySQL |  1、工具navicat<br> 2、连接报错处理 |
-| 06  | 文件操作 |   |
-| 07  | cookie & session |  |
-| 08  | Composer | 三方管理工具  |
+| 06  | MySQL表单实战 |   |
+| 07  | 文件操作 |   |
+| 08  | cookie & session |  |
+| 09  | Composer | 三方管理工具  |
