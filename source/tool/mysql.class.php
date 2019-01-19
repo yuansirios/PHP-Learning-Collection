@@ -53,6 +53,14 @@ class mysql
     }
 
     /**
+     * @return 执行sql
+     */
+    public function execute($sql)
+    {
+        return mysqli_query( $this->mysqli, $sql );
+    }
+    
+    /**
      * 数据查询
      * @param $table 数据表
      * @param null $field 字段

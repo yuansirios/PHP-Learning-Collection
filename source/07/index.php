@@ -9,7 +9,20 @@ if (!$mysql){
 }else{
     // echo '数据库连接成功';
 }
-/************* 分页开始 **************/
+
+//创建数据表
+$sql = "CREATE TABLE IF NOT EXISTS `tbl_User`(".
+       "`id` INT UNSIGNED AUTO_INCREMENT,".
+       "`name` VARCHAR(10) NOT NULL COMMENT '姓名' ,".
+       "`gender` VARCHAR(2) NOT NULL COMMENT '性别' ,".
+       "`age` INT COMMENT '年龄' ,".
+       "`address` VARCHAR(20) COMMENT '地址' ,".
+       "PRIMARY KEY ( `id` )".
+       ")ENGINE=InnoDB DEFAULT CHARSET=utf8";
+
+$mysql->execute($sql);
+
+/**** 分页逻辑****/
 
 //起始页数
 $page = 1;
@@ -27,8 +40,8 @@ $num = 5;
 $pageCount = ceil($totalCount/$num);
 //页数偏移
 $offset = ($page - 1)*$num;
-/************* 分页结束 **************/
 
+//查询列表
 $listArr = $mysql->selectLimite($table,$offset,$num);
 
 $mysql->disconnect();
@@ -67,6 +80,6 @@ if ($next > $pageCount){
 }
 ?>
 <a href="index.php?page=1">首页</a>&nbsp;&nbsp;&nbsp;
-<a href="index.php?page=<?php echo $prev ;?>">上一页</a>&nbsp;&nbsp;&nbsp;
-<a href="index.php?page=<?php echo $next ;?>">下一页</a>&nbsp;&nbsp;&nbsp;
-<a href="index.php?page=<?php echo $pageCount ;?>">尾页</a>&nbsp;&nbsp;&nbsp;
+<a href="index.php?page=<?=$prev?>">上一页</a>&nbsp;&nbsp;&nbsp;
+<a href="index.php?page=<?=$next?>">下一页</a>&nbsp;&nbsp;&nbsp;
+<a href="index.php?page=<?=$pageCount?>">尾页</a>&nbsp;&nbsp;&nbsp;

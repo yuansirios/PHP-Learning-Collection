@@ -1,5 +1,5 @@
 <?php 
-    class Response{
+    class response{
         //默认是json格式
         const JSON='json';
         public static function show($success,$errCode,$errMsg='',$body=array(),$type){

@@ -2,7 +2,7 @@
     //指定返回json数据，默认html
     header("Content-Type:application/json; charset=utf-8");
     //导入工具类
-    require_once('../tool/Response.php');
+    require_once('../tool/response.class.php');
 
     //请求类型
     $method = $_SERVER['REQUEST_METHOD'];
@@ -32,5 +32,5 @@
     $errCode = 200;
     $errMsg = '请求成功';
     $body = array("method"=>"$method","username"=>"$username","password"=>"$password","token"=>"$token");
-    Response::show($success,$errCode,$errMsg,$body,'json');
+    response::show($success,$errCode,$errMsg,$body,'json');
 ?>
