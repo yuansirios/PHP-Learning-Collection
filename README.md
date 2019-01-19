@@ -11,6 +11,7 @@ PHP自学资料整理，希望能给正在学习的你提供点帮助，原创�
 | 04  | 常用表单操作 | 基础操作 |
 | 05  | 上手MySQL |  1、工具navicat<br> 2、连接报错处理 |
 | 06  | MySQL表单实战 | 增删改查 |
-| 07  | 文件操作 |   |
-| 08  | cookie & session |  |
-| 09  | Composer | 三方管理工具  |
+| 07  | MySQL操作封装 | mysql.class.php  |
+| 08  | 文件操作 |   |
+| 09  | cookie & session |  |
+| 10  | Composer | 三方管理工具  |

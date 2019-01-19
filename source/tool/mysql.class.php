@@ -7,17 +7,49 @@ class mysql
 
     /**
      * 数据库连接
-     * @param $config 配置数组
      */
-    public function connect($config)
+    public function connect()
     {
+        /* 配置连接参数 */
+        $config = array(
+            'host' => '127.0.0.1',
+            'username' => 'root',
+            'password' => '88888888',
+            'database' => 'mock'
+        );
+
         $host = $config['host'];        //主机地址
         $username = $config['username'];//用户名
         $password = $config['password'];//密码
-        $database = $config['database'];//数据库
-        $port = $config['port'];        //端口号
 
-        $this->mysqli = new mysqli($host, $username, $password, $database, $port);
+        $this->mysqli = mysqli_connect($host,$username,$password);
+
+        //设置字符集
+        mysqli_set_charset($this->mysqli,'utf8');
+        //选择数据库
+        mysqli_select_db($this->mysqli,$config['database']);
+
+        if ($this->mysqli){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @return 关闭连接
+     */
+    public function disconnect()
+    {
+        mysqli_close($this->mysqli);
+    }
+
+    /**
+     * @return mixed 获取全部结果
+     */
+    public function fetchAll()
+    {
+        return mysqli_fetch_assoc($this->result);
     }
 
     /**
@@ -37,16 +69,42 @@ class mysql
         if (!empty($where)) {
             $sql = $sql . ' WHERE ' . $where;
         }
-        $this->result = $this->mysqli->query($sql);
-        return $this->result->num_rows;
+        $this->result = mysqli_query( $this->mysqli, $sql );
+        return $this->result;
     }
 
     /**
-     * @return mixed 获取全部结果
+     * 分页查询
+     * @param $table 数据表
+     * @param null $offset 条数偏移
+     * @param null $pageNum 条数
+     * @return array 查询结果
      */
-    public function fetchAll()
+    public function selectLimite($table,$offset=null, $pageNum=null)
     {
-        return $this->result->fetch_all(MYSQLI_ASSOC);
+        $sql = 'SELECT * FROM '. $table . ' LIMIT ' . $offset . ',' . $pageNum;
+        return mysqli_query( $this->mysqli, $sql );
+    }
+
+    /**
+     * 条数查询
+     * @param $table 数据表
+     * @param null $field 字段
+     * @param null $where 条件
+     * @return mixed 查询结果数目
+     */
+    public function count($table, $field = null, $where = null)
+    {
+        $sql = "SELECT COUNT(*) AS count FROM {$table}";
+        if (!empty($field)) {
+            $field = '`' . implode('`,`', $field) . '`';
+            $sql = str_replace('*', $field, $sql);
+        }
+        if (!empty($where)) {
+            $sql = $sql . ' WHERE ' . $where;
+        }
+        $this->result = mysqli_query( $this->mysqli, $sql );
+        return self::fetchAll()['count'];
     }
 
     /**
@@ -63,8 +121,8 @@ class mysql
         $keys = '`' . implode('`,`', array_keys($data)) . '`';
         $values = '\'' . implode("','", array_values($data)) . '\'';
         $sql = "INSERT INTO {$table}( {$keys} )VALUES( {$values} )";
-        $this->mysqli->query($sql);
-        return $this->mysqli->insert_id;
+
+        return mysqli_query( $this->mysqli, $sql );
     }
 
     /**
@@ -82,13 +140,22 @@ class mysql
         $sets = array();
         foreach ($data as $key => $value) {
             $kstr = '`' . $key . '`';
-            $vstr = '\'' . $value . '\'';
+            if (is_int($value)){
+                //int类型不要加引号
+                $vstr = $value;
+            }else{
+                 $vstr = '\'' . $value . '\'';
+            }
             array_push($sets, $kstr . '=' . $vstr);
         }
         $kav = implode(',', $sets);
         $sql = "UPDATE {$table} SET {$kav} WHERE {$where}";
-        $this->mysqli->query($sql);
-        return $this->mysqli->affected_rows;
+        $result = mysqli_query( $this->mysqli, $sql );
+        if ($result && mysqli_affected_rows($this->mysqli)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -100,7 +167,12 @@ class mysql
     public function delete($table, $where)
     {
         $sql = "DELETE FROM {$table} WHERE {$where}";
-        $this->mysqli->query($sql);
-        return $this->mysqli->affected_rows;
+        $result = mysqli_query( $this->mysqli, $sql );
+        if ($result && mysqli_affected_rows($this->mysqli)){
+            return true;
+        } else {
+            return false;
+        }
     }
+
 }
