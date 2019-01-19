@@ -26,8 +26,7 @@ mysqli_set_charset($conn,'utf8');
 mysqli_select_db($conn,'mock');
 
 $sql = "UPDATE tbl_User ".
-       "SET name = ".$name.",gender = ".$gender.",age = ".$age.",address = ".$address
-       ." ".
+       "SET name = '".$name."',gender = '".$gender."',age = ".$age.",address = '".$address."' ".
        "WHERE id = ".$id." ";
 
 $result = mysqli_query( $conn, $sql );
@@ -35,7 +34,7 @@ $result = mysqli_query( $conn, $sql );
 if ($result && mysqli_affected_rows($conn)){
     echo '更新数据成功 <a href="index.php">返回</a>';
 } else {
-    echo '更新数据失败: ' . mysqli_error($conn);
+    echo '更新数据失败: ' . mysqli_error($conn)."<br>".$sql;
 }
 
 mysqli_close($conn);

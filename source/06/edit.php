@@ -40,7 +40,9 @@ $gender = $rows['gender'];
     <input type="radio" name="gender" value="男" <?php if($gender==="男") echo "checked";?>>男 
     <input type="radio" name="gender" value="女" <?php if($gender==="女") echo "checked";?>>女
     <br>
-    年龄: <input type="text" name="age" value=<?php echo $rows['age'];?>>
+    年龄:
+    <!-- 只允许输入数字 -->
+    <input type="text" name="age" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'')" value=<?php echo $rows['age'];?>>
     <br>
     地址: <input type="text" name="address" value=<?php echo $rows['address'];?>>
     <br>
