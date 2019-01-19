@@ -28,6 +28,8 @@ $result = mysqli_query( $conn, $sql );
 $rows = mysqli_fetch_assoc($result);
 
 $gender = $rows['gender'];
+
+mysqli_close($conn);
 ?>
 
 <html>
@@ -36,13 +38,14 @@ $gender = $rows['gender'];
     <input type="hidden" name="id" value="<?php echo $rows['id'];?>">
     姓名: <input type="text" name="name" value=<?php echo $rows['name'];?>>
     <br>
-    性别: 
-    <input type="radio" name="gender" value="男" <?php if($gender==="男") echo "checked";?>>男 
-    <input type="radio" name="gender" value="女" <?php if($gender==="女") echo "checked";?>>女
+    性别:
+    <input type="radio" name="gender" value="男" <?php if($gender==="男" ) echo "checked" ;?>>男
+    <input type="radio" name="gender" value="女" <?php if($gender==="女" ) echo "checked" ;?>>女
     <br>
     年龄:
     <!-- 只允许输入数字 -->
-    <input type="text" name="age" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'')" value=<?php echo $rows['age'];?>>
+    <input type="text" name="age" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'')" value=<?php echo
+        $rows['age'];?>>
     <br>
     地址: <input type="text" name="address" value=<?php echo $rows['address'];?>>
     <br>

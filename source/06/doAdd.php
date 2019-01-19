@@ -34,4 +34,6 @@ if(!$result ){
     echo $name . '更新数据成功 <a href="index.php">返回</a>';
 }
 
+mysqli_close($conn);
+
 ?>
