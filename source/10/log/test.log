@@ -1,0 +1,8 @@
+[2019-01-22 09:53:48] user.NOTICE: msg ["content1"] {"process_id":31655,"uid":"321444a"}
+[2019-01-22 09:53:48] user.NOTICE:  ["content2"] {"process_id":31655,"uid":"5139f26"}
+[2019-01-22 09:53:51] user.ERROR:  ["content3"] {"process_id":31655,"uid":"f6da85f"}
+[2019-01-22 09:53:51] user.ERROR:  ["content4"] {"process_id":31655,"uid":"4076e8e"}
+[2019-01-22 09:53:51] user.ERROR:  ["content5"] {"process_id":31655,"uid":"c64aaae"}
+{"message":"","context":["content6"],"level":400,"level_name":"ERROR","channel":"yxd","datetime":{"date":"2019-01-22 09:53:51.797881","timezone_type":3,"timezone":"UTC"},"extra":{"process_id":31655,"uid":"55bf146"}}
+[2019-01-22 09:53:51] yxd.ERROR:  ["content7"] {"process_id":31655,"uid":"d58c5f9"}
+[2019-01-22 09:53:51] yxd.ERROR:  [["content8"]] {"process_id":31655,"uid":"496c37c"}

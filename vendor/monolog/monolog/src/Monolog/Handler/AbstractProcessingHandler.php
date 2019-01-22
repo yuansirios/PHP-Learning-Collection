@@ -11,6 +11,8 @@
 
 namespace Monolog\Handler;
 
+use Monolog\ResettableInterface;
+
 /**
  * Base Handler class providing the Handler structure
  *
@@ -26,7 +28,7 @@ abstract class AbstractProcessingHandler extends AbstractHandler
      */
     public function handle(array $record)
     {
-        if ($record['level'] < $this->level) {
+        if (!$this->isHandling($record)) {
             return false;
         }
 
