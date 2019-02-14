@@ -12,6 +12,6 @@ PHP自学资料整理，希望能给正在学习的你提供点帮助，原创�
 | 05  | 上手MySQL |  1、工具navicat<br> 2、连接报错处理 |
 | 06  | MySQL表单实战 | 增删改查 |
 | 07  | MySQL操作封装 | `mysql.class.php`  |
-| 08  | 日常简单文件操作 | `file.class.php` |
+| 08  | 日常简单文件操作，上传 | `file.class.php` |
 | 09  | Cookie & Session | demo示例完善 |
 | 10  | Composer | 三方管理工具  |
