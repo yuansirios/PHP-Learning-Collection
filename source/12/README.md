@@ -5,7 +5,7 @@
 
 [访问官网](https://www.mamp.info/en/)
 
-我用的是[MAMP-PRO-5.1破解版下载链接](:https://pan.baidu.com/s/1qFpv8TcjowotbtqtPOoWHw) 密码:u3re
+我用的是[MAMP-PRO-5.1破解版下载链接](https://pan.baidu.com/s/1qFpv8TcjowotbtqtPOoWHw) 密码:u3re
 
 需要的小伙伴自行下载
 
