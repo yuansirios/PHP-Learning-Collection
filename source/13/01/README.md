@@ -3,15 +3,15 @@
 
 ### 一、Composer安装ThinkPHP
 
-1、**Composer全局安装：**使composer命令在任何目录下都可以使用（不清楚的同学可以查看我之前对Composer的使用介绍或查看[官网说明](https://www.phpcomposer.com)）
+1、**Composer全局安装：** 使composer命令在任何目录下都可以使用（不清楚的同学可以查看我之前对Composer的使用介绍或查看[官网说明](https://www.phpcomposer.com)）
 
-2、**安装中国全量镜像：**大幅提升国内访问速度
+2、**安装中国全量镜像：** 大幅提升国内访问速度
 
 ```
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
-3、**搜索安装包：**[https://packagist.org/](https://packagist.org/)
+3、**搜索安装包：** [https://packagist.org/](https://packagist.org/)
 
 ![](./img/搜索.png)
 
