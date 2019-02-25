@@ -4,4 +4,4 @@
 | 目录 | 内容说明  |  备注  |
 | :----:  | :---- |:---- |
 | 01  | [ThinkPHP安装与运行流程](https://www.jianshu.com/p/e3c81d4e0422) |  |
-| 02  | [ThinkPHP配置技巧]() |  |
+|02| [ThinkPHP配置技巧](https://www.jianshu.com/p/0bd79b6a392d)||

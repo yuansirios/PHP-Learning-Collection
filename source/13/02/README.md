@@ -72,6 +72,7 @@ class User
 }
 ```
 
+* 通过 `localhost/admin/user/get` 访问结果如下：
 * 一级配置
 
 ![](./img/一级配置.png)
