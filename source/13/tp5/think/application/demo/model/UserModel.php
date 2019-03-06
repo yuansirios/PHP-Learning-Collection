@@ -14,4 +14,8 @@ class UserModel extends Model
     {
         $this->name = $name;
     }
+
+    public function sayHello($name = 'yuan'){
+        return 'Hello '.$name;
+    }
 }

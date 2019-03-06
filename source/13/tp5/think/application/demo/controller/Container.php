@@ -4,7 +4,6 @@ namespace app\demo\controller;
 
 use app\demo\model\UserModel;
 
-
 /**
  * 容器与依赖注入的原理
  * 1.任何的URL访问，最终都是定位到控制器，由控制器中某个具体的方法去执行
@@ -79,12 +78,14 @@ class Container
     /**
      * 绑定闭包
      * 可以把一个闭包方法绑定到容器中
+     * \think\Container 方式
      */
     public function bindClosure()
     {
-        bind('sayHello', function ($name) {
+        \think\Container::set('sayHello', function ($name) {
             return 'hello,' . $name;
         });
-        echo app('sayHello',['yuan']);
+
+        return \think\Container::get('sayHello',['name'=>'yuan']);
     }
 }
