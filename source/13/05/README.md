@@ -22,15 +22,14 @@
  
  <img src='./img/全局配置.png' width=300>
   
-	```
-	//全局配置连接
+ ```
 	public function conn()
 	{
 	    return Db::table('student')
 	    ->where('id','2')
 	    ->value('name');
 	}
-	```
+ ```
 
  <img src='./img/全局连接.png' width=500>
  
@@ -107,14 +106,14 @@
  
  <img src='./img/单条查询原理.png' width=500>
 
-	**【问题】**  
+ **【问题】**  
 	
-	```
-	//返回字段设置别名出错，暂时还没找到原因？
+ ```
+ 	//返回字段设置别名出错，暂时还没找到原因？
 	->field(['id'=>'编号','name'=>'姓名','email'=>'邮箱'])
-	```
+  ```
 	
-	<img src='./img/设置别名错误.png' width=500>
+ <img src='./img/设置别名错误.png' width=500>
 	
 * 多条查询
 
