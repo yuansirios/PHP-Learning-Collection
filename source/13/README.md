@@ -8,4 +8,4 @@
 |03| [ThinkPHP设计模式与Trait技术](https://www.jianshu.com/p/56b899f5273d)||
 |04| [容器/依赖注入/静态代理/请求对象](https://www.jianshu.com/p/de16572535db)||
 |05| [数据库与模型](https://www.jianshu.com/p/6a1c6eaf46af)||
-|06| [模板变量与常用标签]()||
+|06| [模板变量与常用标签](https://www.jianshu.com/p/13b2fc3f23d3)||
