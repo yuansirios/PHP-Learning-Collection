@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title|default="默认标题"}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="text-center">用户信息表</h2>
+            <table class="table table-default table-bordered table-hover text-center">
+                <tr class="bg-primary">
+                    <td>ID</td>
+                    <td>姓名</td>
+                    <td>年龄</td>
+                    <td>邮箱</td>
+                </tr>
+                {volist name="data" id="list"}
+                <tr>
+                    <td>{$list.id}</td>
+                    <td>{$list.name}</td>
+                    <!--条件判断-->
+                    <td>
+                        {if $list.age > 18}
+                        <span style="color: green">成年人</span>
+                        {else/}
+                        <span style="color: red">未成年人</span>
+                        {/if}
+                    </td>
+                    <td>{$list.email}</td>
+                </tr>
+                {/volist}
+            </table>
+            <div class="col-md-2"></div>
+            <!--分页条-->
+            <div class="text-center">
+                {$data|raw}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
