@@ -20,5 +20,5 @@ PHP自学资料整理，希望能给正在学习的你提供点帮助，原创�
 | 11  | 错误处理 | [1、禁止显示错误](https://www.jianshu.com/p/be0709d01a4c) <br>[2、错误报告级别](https://www.jianshu.com/p/b7f7297d15c9)<br>[3、错误记录日志](https://www.jianshu.com/p/7c39f3f31f66)<br>[4、自定义错误处理函数](https://www.jianshu.com/p/10c6acd9676b) |
 | 12  | [MAMP 统一集成管理工具](https://www.jianshu.com/p/0088d83c04f5) | 方便，五星推荐  |
 | 13  | [ThinkPHP 5.1学习教程](https://www.jianshu.com/p/cb832fab7e61) | 简单易懂，要多实践  |
-| 14 | [Redis常规操作]()| 示例演示 |
+| 14 | [Redis常规操作](https://github.com/yuansirios/PHP-Learning-Collection/tree/master/source/14)| 示例演示 |
 | 15 | [优雅的 CodeIgniter](https://www.jianshu.com/p/1fd7e344a7f2)|示例演示|
