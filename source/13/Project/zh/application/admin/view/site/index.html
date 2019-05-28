@@ -1,0 +1,90 @@
+{layout name="public::layout" /}
+<h4 class="text-danger text-center">站点管理</h4>
+
+<form action="{:url('site/save')}" method="post">
+	<!-- 用隐藏域向服务器传idd -->
+	<input type="hidden" name="id" value="{$siteInfo.id}">
+
+	<div class="form-group">
+	    <label for="title">网站名称</label>
+	    <input type="text" name="title" class="form-control" id="title" value="{$siteInfo.title}">
+	</div>
+
+	<div class="form-group">
+	    <label for="keywords">关键字:</label>
+	    <input type="text" name="keywords" class="form-control" id="keywords" value="{$siteInfo.keywords}">
+	</div>
+
+	<div class="form-group" >
+	<label>网站描述</label> 
+	<textarea id="editor"  class="form-control" placeholder="文章内容" id="content" name="content" style="min-height: 100px;">{$siteInfo.desc}</textarea>                   
+	</div>
+	
+	{//网站是否关闭}
+	<div class="form-group">
+    <label">网站是否开启:</label>   
+      <label class="radio-inline">
+        <input type="radio" name="is_open"  value="1"
+      {//如果当前是开启则将它置为选中状态}
+      {eq name="$siteInfo.is_open" value="1"}
+        checked=""
+      {/eq}
+
+        > 开启
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="is_open"  value="0" 
+      {//如果当前是关闭则将它置为选中状态}
+      {eq name="$siteInfo.is_open" value="0"}
+        checked=""
+      {/eq}
+
+        > <span class="text-danger">关闭</span>
+      </label>
+	</div>
+	
+	{//如果站点已关闭,则不显示注册状态}
+	{eq name="$siteInfo.is_open" value="1"}
+
+	{//网站是否允许注册}
+	<div class="form-group">
+    <label">是否允许注册:</label>   
+      <label class="radio-inline">
+        <input type="radio" name="is_reg"  value="1"
+      {//如果当前是允许则将它置为选中状态}
+      {eq name="$siteInfo.is_reg" value="1"}
+        checked=""
+      {/eq}
+
+        > 允许
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="is_reg"  value="0" 
+      {//如果当前是禁止则将它置为选中状态}
+      {eq name="$siteInfo.is_reg" value="0"}
+        checked=""
+      {/eq}
+
+     
+
+        > <span class="text-danger">禁止</span>
+      </label>
+	</div>
+
+	 {/eq}
+
+
+
+
+
+
+	
+	<!-- 这里使用原生的post提交 -->
+	<button type="submit" class="btn btn-primary">保存</button>
+</form>
+
+
+
+
+
+

@@ -1,0 +1,275 @@
+仿<知乎>社区功能
+
+第一部分: 准备工作:
+
+一、下载框架源码
+在当前Web目录下,执行:
+composer create-project topthink/think  tp51
+
+二、导入静态资源库
+1.jquery
+(1)本地:官网下载  www.jquery.com
+(2)CDN: http://cdn.code.baidu.com/(百度静态资源库)
+ http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js
+jqueryui
+
+2. bootstrap
+(1)中文网:bootcss.com
+(2)CDN:http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js
+bootswatch
+
+3.导入方法
+(1):必须放在public/static/目录下面
+(2):创建js,css,images三个目录,将jquery,bootstrap的js文件放在js目录,bootstrap的css放在css目录
+images目录备用
+
+三、我们先创建项目的基本目录结构
+1.在application下创建公共模块:common,用来放
+  模型,公共控制器,自定义验证器和静态代理类等公共资源
+2.applicaton/controller/view下面
+   2.1:创建index目录对应默认控制器
+   2.2:创建public目录存放页面的公共部分
+
+四,在application/common/controller/创建公共控制器
+namespace app\common\controller;
+use think\Controller;
+use Base extends Controller
+{
+	public function init()
+	{
+
+	}
+}
+
+五: 配置数据库连接参数
+config/database.php
+主要参数: type,hostname,datebase,username,password
+
+六:测试数据库连接
+打开默认控制器application/controller/Index,在hello()方法中:
+dump(\app\common\model\User::get(1));
+有数据输出,表示连接正常
+
+-----------------------------------------------------------
+第二部分:页面的主要架构
+一、首页访问测试:
+1. application/index/Index.php的index()
+ return $this->fetch('index',['name'=>'php.cn']) ;
+2. 创建与默认控制器index对应的视图架构
+2.1 在index模块目录下创建index目录对应默认控制器index
+2.2 在index控制器目录下创建index.html对应于index()操作
+index.html内容: {$name}
+2.3 打开浏览器访问: tp51.io/index/index/index  //输出: php.cn则正常
+
+二、创建首页
+1. 生成bootstrap的基本页面结构
+...
+<title>{$title|default="页面标题"}</title>
+	<!-- 使用load标签加载资源文件 -->
+	{load href="/static/css/bootstrap.min.css" /}
+	{load href="/static/js/jquery-3.3.1.min.js" /}
+	{load href="/static/js/bootstrap.min.js" /}
+...
+2.剥离头部与尾部
+2.1 在view目录下创建public目录
+2.2 public/header.html放公共头部, public/footer.html放公共底部
+	pbulic/nav.html放导航
+2.3 将右侧信息列表也做成公共部分:right.html
+
+3.用户注册与登录页面
+3.1 表单采用水平样式的
+3.2 字段严格按照User模型中的规定来定义
+
+4.创建验证器
+4.1 在application/common/validate/User.php
+4.2 需要验证四个字段: name,email,mobile,password
+4.3 创建一个测试专用控制器Test用来测试这个验证器
+------------------------------------------------------------
+
+三、创建注册视图与业务逻辑
+1. 创建控制器application/controller/User.php,用来处理与用户相关的业务逻辑
+2. 创建注册方法: register(),渲染出注册页面: view/user/register.html
+2. 此时的index.html首页其实就是一个注册页面了,将内容复制到register.html中
+2. 
+
+********************* [实战第二天教学内容] *************************
+
+四、数据验证与模型自动完成
+1. 简化User用户信息表的验证规则:
+app\common\validate\User:
+protected $rule = [
+		'name|姓名'=> 'require|length:5,20|chsAlphaNum',
+		'email|邮箱'=> 'require|email|unique:zh_user',
+		'mobile|手机号'=>'require|mobile|unique:zh_user',
+		'password|密码'=>'require|length:6:20|alphaNum|confirm'
+	];
+
+2. User::insert(),加入数据验证功能:
+public function  insert()
+	{	//前端提交的必须是Ajax请求再进行验证与新增操作
+		if(Request::isAjax()){
+			//1.数据验证
+			$data = Request::post();  //要验证的数据
+			$rule = 'app\common\validate\User';  //自定义的验证器
+
+			//开始验证: $res 中保存错误信息,成功返回true
+			$res=$this->validate($data,$rule);
+		  	if (true !== $res){  //验证失败
+		  		return ['status'=> -1, 'message'=>$res];
+		  	}else { //验证成功
+		  		//2. 将数据写入到数据表zh_user中,并对写入结果进行判断
+		  		if(UserModel::create($data)){
+					return ['status'=>1, 'message'=>'恭喜,注册成功~~'];
+				} else {
+					return ['status'=>0, 'message'=>'注册失败~~'];			
+				}
+			}			 
+		}else{
+			$this->error('请求类型错误','register');
+		}
+	}
+3. 前端的Ajax的成功回调函数进行重写,对三种返回结果进行处理:
+ $.ajax({
+        type: 'post',
+        url: "{:url('insert')}",
+        data: $('#login').serialize(),
+        dataType: 'json',
+        success: function(data){
+          switch (data.status)
+          {
+            case 1:
+              alert(data.message);
+              window.location.href = "{:url('index/index')}";
+            break;
+            case 0:
+            case -1:
+              alert(data.message);
+              // window.location.href = "{:url('user/register')}";
+              window.location.back();
+            break;
+          }
+
+        }
+      })
+
+4. 修改自定义模型User,添加获取器,修改器,自动时间戳及自动完成
+protected $pk = 'id';  //默认主键
+	protected $table = 'zh_user';  //默认数据表
+
+	protected $autoWriteTimestamp = true; //开启自动时间戳
+	//定义时间戳字段名:默认为create_time和create_time,如果一致可省略
+	//如果想关闭某个时间戳字段,将值设置为false即可:$create_time = false
+	protected $createTime = 'create_time'; //创建时间字段
+	protected $updateTime = 'update_time'; //更新时间字段
+	protected $dateFormat = 'Y年m月d日'; //时间字段取出后的默认时间格式
+
+	//用户状态获取器
+	public function getStatusAttr($value)
+	{
+		$status = ['1'=>'启用', '0'=>'禁用'];
+		return $status[$value];
+	}
+
+	//用户类型获取器
+	public function getIsAdminAttr($value)
+	{
+		$status = ['1'=>'管理员', '0'=>'注册会员'];
+		return $status[$value];
+	}
+
+	//用户密码修改器
+	public function setPasswordAttr($value)
+	{
+		return sha1($value);
+	}
+
+----------------------------------------------------------------
+5. 用户登录
+5.1 创建登录模板,并在控制器User/login()进行渲染
+直接复用register.html注册模板,删除不需要的字段,同样采用ajax提交
+只保留邮箱和密码二个字段,手机也可以,我们这里选用email来演示
+
+5.2 登录数据验证与查询
+查询使用get静态方法,条件使用闭包创建,返回前端的数据与注册是一样的,最大限度实现代码复用
+登陆成功后,将用户ID写到SESSION中保存
+
+5.3 在nav.html导航模板中,根据session确定要显示的菜单内容
+
+5.4 防止重复登录检测:在公共控制器Base.php中
+public function isLogin()
+    {
+    	if(Session::has('user_id')){
+    		// return Session::get('user_id');
+    		$this->error('客官,你已经登录啦~~','index/index');
+    	}
+    }
+
+ 在登录渲染方法中调用: User/login()
+ 5.5. 退出登录: User::logout()
+ Session::clear();
+ $this->success('退出成功','index/index');
+
+
+ ************************ [第三天: 文章操作] **************************
+
+
+1.创建文档表zh_article,栏目表zh_article_category的自定义模型
+app\common\model\Article.php
+app\common\model\ArtCate.php
+
+---------------------------------------------------------------
+2.创建zh_article表的验证规则
+app\common\validate\Article.php
+app\common\validate\ArtCate.php
+--------------------------------------------------------------
+3. 在默认控制器index: app\index\index\创建insert()
+insert():渲染文章添加表单:
+3.1 :昨天检测是否已登录Base.php/isLogin()要更名为:logined,并把User控制器中的login()方法中进行修改
+3.2 :在Base.php中创建新的isLogin()用来判断用户是否已经登录
+3.3 :打开view/public/nav.html模板文件,将发布文章的链接改成: {:url('index/insert')}
+----------------------------------------------------------------------
+4. 使用模板继承来简化模板制作
+4.1 创建view/public/base.html,有二个多余的<div>要放在下面对应的公共模板中
+4.2 最终:{include file="public::header" /}
+		{block name="body"}左边内容部分{/block}
+		{include file="public:right" /}
+		{include file="public::footer" /}
+4.3 修改已完成的模板,顶部加上{extend name="public:base" /},个性内容放在{block name="body"}***{/bolck}中
+4.4 主要有三个模板: login.html,register.html,index.html
+-----------------------------------------------------------------------
+
+5. 文章分类:文章发布前应该先做文章分类,在zh_article_category文章分类表中添加二个栏目
+php,前端
+
+6. 在view\index\创建模板insert.html:发布文章
+user_id在session中,使用隐藏域发送,使用原生post提交,先要进行栏目查询
+--------------------------------------------------------------------------
+7. 在Index.php中创建save方法来保存发布的文章
+
+*********************[第四天: 导航,搜索等功能]************************
+
+补充:用户注册成功后自动登录:就是将新用户的信息直接写到session中
+在User::insert()
+if($user=UserModel::create($data)){
+//注册成功后,实现自动登录
+$courentUser = UserModel::get($user->id);
+Session::set('user_id',$courentUser->id);
+Session::set('user_name',$courentUser->name);
+return ['status'=>1, 'message'=>'恭喜,注册成功~~'];
+------------------------------------------------------------
+1. 分类导航的处理
+1.1.每个页面都要用到导航,需要在Base.php公共控制器中创建,并在初始化方法执行
+
+
+
+
+
+
+
+
+
+
+
+
+
+

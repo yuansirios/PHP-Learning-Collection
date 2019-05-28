@@ -1,0 +1,25 @@
+<!-- 左侧4列 -->
+<!-- 非超级管理员是不允许进行系统管理操作的 -->
+{eq name="$Think.session.is_admin" value="1"}
+<ul class="nav nav-pills nav-stacked">
+	<li class="nav-header h3">系统管理</li>
+	<li>
+		<a href="{:url('site/index')}"><span class="glyphicon glyphicon-cog"></span>&nbsp;网站管理</a>
+	</li>
+</ul>
+{/eq}
+<ul class="nav nav-pills nav-stacked">
+	<li class="nav-header h3">用户管理</li>
+	<li><a href="{:url('user/userList')}"><span class="glyphicon glyphicon-user"></span>&nbsp;用户列表</a></li>
+</ul>
+
+<ul class="nav nav-pills nav-stacked">
+	<li class="nav-header h3">文章管理</li>
+	{eq name="$Think.session.is_admin" value="1"}
+	<li><a href="{:url('cate/cateList')}"><span class="glyphicon glyphicon-lock"></span>&nbsp;分类管理</a></li>
+	{/eq}
+	<li><a href="{:url('article/artList')}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;文章管理</a></li>
+</ul>
+
+
+

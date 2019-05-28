@@ -1,0 +1,84 @@
+{extend name="public:base" /}
+{block name="body"}
+	<!-- 主体 -->
+	<div class="row">
+		<!-- 左侧8列 -->
+		<div class="col-md-8">
+		<!-- 页头 -->
+		<div class="page-header">
+  			<h2>{$art.cate_id|getCateName}</h2>
+		</div>
+
+		<div>			
+            
+             <h4>{$art.title}</h4>
+                <p>作者:{$art.user_id|getUserName}&nbsp;&nbsp;
+               发布时间:{$art.create_time}&nbsp;&nbsp;
+               阅读量:{$art.pv}&nbsp;&nbsp;
+
+               </p>
+               <div>{:htmlspecialchars_decode($art.content)}</div>
+              <hr/>
+              <button type="button"
+               class="btn btn-default" id="fav" 
+               user_id="{$art.user_id}" article_id="{$art.id}" session_id="{$Think.session.user_id}">收藏</button>
+          </div> 
+
+         
+         
+          <!-- 处理收藏功能 -->
+          <script type="text/javascript">
+            $(function(){
+              $('#fav').on('click',function(){
+
+
+
+                //获取当前的用户id与栏目id,因为收藏表中有这二个字段
+                var userId = $(this).attr('user_id')
+                var artId = $(this).attr('article_id')
+                var sessionId = $(this).attr('session_id')
+                if (userId && artId){
+                  $.ajax(
+                  {
+                    type: 'get',
+                    url : "{:url('index/index/fav')}",
+                    data: {
+                            user_id    : userId,
+                            article_id : artId,
+                            session_id : sessionId,
+                            time:new Date().getTime()
+                          },
+                    dataType : 'json',
+                    success  : function(data)
+                    {
+                      switch(data.status)
+                      {
+                      case 1:
+                        $('#fav').attr('class','btn btn-success')
+                        $('#fav').text(data.message)
+                        break
+
+                        case 0:
+                        $('#fav').attr('class','btn btn-default')
+                        $('#fav').text(data.message)
+                        break
+
+                        case -1:
+                        alert(data.message)
+                        break
+
+                        case -2:
+                        alert(data.message)
+                        break
+
+                      }
+                   }
+                  }
+                    
+                  )
+                }
+  
+              })
+            })
+          </script>          
+{/block}
